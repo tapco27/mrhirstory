@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="ar">
+<head>
+<meta charset="utf-8">
+<title>مستر تاريخ — قالب الريل</title>
+<link rel="stylesheet" href="../node_modules/@fontsource/tajawal/500.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/tajawal/700.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/tajawal/800.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/lalezar/400.css">
+<link rel="stylesheet" href="../node_modules/@fontsource/aref-ruqaa/700.css">
+<style>
+:root{--green:#0E3B2E;--deep:#07241A;--gold:#D9AE55;--gold2:#F6DD9A;--cream:#F8EFDC;--red:#A3302A}
+*{box-sizing:border-box}
+html,body{margin:0;background:#000}
+#stage{position:relative;width:1080px;height:1920px;overflow:hidden;background:#000;font-family:'Tajawal',sans-serif;color:#fff;direction:rtl}
+.abs{position:absolute}
+.display{font-family:Lalezar;font-weight:400;text-shadow:0 6px 0 rgba(4,26,18,.55),0 10px 36px rgba(0,0,0,.65)}
+.panel{background:linear-gradient(180deg,#14503d,#0a2e22);box-shadow:0 0 0 4px var(--gold),0 0 0 12px rgba(7,36,26,.85),0 0 0 14px rgba(217,174,85,.55),0 30px 70px rgba(0,0,0,.55)}
+
+/* Pictures */
+#pics{position:absolute;inset:0;isolation:isolate}
+.slot{position:absolute;inset:0;overflow:hidden;opacity:0}
+.slot img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0}
+#air{position:absolute;inset:0}
+#dim{position:absolute;inset:0;background:#04130d;opacity:0}
+#shadeTop{position:absolute;left:0;right:0;top:0;height:760px;background:linear-gradient(180deg,rgba(3,18,12,.86) 0%,rgba(3,18,12,.55) 48%,transparent 100%);opacity:0}
+#shadeBot{position:absolute;left:0;right:0;bottom:0;height:900px;background:linear-gradient(0deg,rgba(3,18,12,.82) 0%,rgba(3,18,12,.5) 45%,transparent 100%);opacity:0}
+#flash{position:absolute;inset:0;background:#fff;opacity:0}
+
+/* The gate: after the host's opening its door swings open and the camera goes through into the story */
+#door{position:absolute;inset:0;overflow:hidden;display:none}
+#dark{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 46%,#1c1206 0%,#000 70%)}
+#glow{position:absolute;inset:0;background:radial-gradient(ellipse 52% 44% at 50% 48%,rgba(255,236,190,.95) 0%,rgba(255,214,140,.5) 38%,transparent 72%);mix-blend-mode:screen;opacity:0}
+#doorCam{position:absolute;left:0;top:0}
+#leaves{position:absolute;transform-style:preserve-3d}
+#leaves img{position:absolute;top:0;height:100%;backface-visibility:visible}
+#wall{position:absolute;left:0;top:0}
+#plaque{position:absolute;display:flex;align-items:center;justify-content:center;font:700 150px/1 'Aref Ruqaa';color:#F6DD9A;text-shadow:0 5px 0 #0a2418,0 0 34px rgba(246,221,154,.45);white-space:nowrap;padding-bottom:26px}
+.lamp{position:absolute;width:220px;height:470px;margin-left:-110px;transform-origin:50% 0}
+
+/* Brand tag */
+#tag{position:absolute;left:52px;top:148px;direction:ltr;display:flex;align-items:center;gap:12px;font:700 30px Tajawal;color:var(--cream);text-shadow:0 2px 10px rgba(0,0,0,.8);opacity:0}
+#tag svg{width:30px;height:30px}
+#tag b{font:400 36px Lalezar;direction:rtl}
+
+#aiTag{position:absolute;left:52px;top:200px;padding:6px 16px 3px;border-radius:999px;background:rgba(4,22,16,.62);font:500 24px Tajawal;color:var(--cream);opacity:0}
+
+/* Graphics */
+.cd{position:absolute;left:0;right:0;text-align:center;opacity:0}
+.ribbon span{display:inline-block;padding:18px 54px 12px;border-radius:999px;font:400 60px/1.1 Lalezar;color:var(--gold2)}
+.title .box{display:inline-block;padding:32px 66px 28px;border-radius:44px}
+.title .t{font:400 96px/1.15 Lalezar;color:var(--cream)}
+.title .s{margin-top:6px;direction:ltr;font:800 30px Tajawal;letter-spacing:7px;color:var(--gold2)}
+.title .t2{display:inline-block;margin-top:30px;padding:20px 60px 12px;border-radius:999px;background:linear-gradient(180deg,#2a8bd6,#135a98);box-shadow:0 0 0 4px #cfe8ff,0 20px 50px rgba(0,0,0,.5);font:400 92px/1.1 Lalezar;color:#fff}
+.title .pin{position:absolute;left:470px;top:-150px;width:140px;height:180px}
+.year .n{display:inline-block;direction:ltr;font:400 250px/1 Lalezar;color:var(--gold2);text-shadow:0 8px 0 #7a5516,0 18px 50px rgba(0,0,0,.65);letter-spacing:4px}
+.ask .t{display:inline-block;font:400 132px/1.2 Lalezar;color:#fff}
+.chip{left:auto;right:56px;display:flex;align-items:baseline;gap:18px;padding:14px 36px 10px 40px;border-radius:26px;background:linear-gradient(180deg,rgba(18,74,57,.94),rgba(8,40,29,.94));box-shadow:0 0 0 3px var(--gold),0 18px 40px rgba(0,0,0,.5);transform-origin:100% 50%;white-space:nowrap}
+.chip .n{direction:ltr;font:400 96px/1 Lalezar;color:var(--gold2)}
+.chip .l{font:800 46px Tajawal;color:var(--cream)}
+.span .box{display:inline-block;width:900px;padding:26px 44px 30px;border-radius:36px}
+.span .lab{font:400 58px/1.2 Lalezar;color:var(--cream)}
+.span .row{display:flex;align-items:center;gap:24px;direction:ltr;margin-top:8px;font:400 76px/1 Lalezar;color:var(--gold2)}
+.span .bar{flex:1;height:22px;border-radius:11px;background:rgba(255,255,255,.18);overflow:hidden}
+.span .bar i{display:block;height:100%;width:0;border-radius:11px;background:linear-gradient(90deg,var(--gold),var(--gold2))}
+.tally .box{display:inline-flex;align-items:flex-end;gap:14px;padding:30px 44px 24px;border-radius:36px;direction:ltr}
+.tally svg{width:74px;height:190px;transform-origin:50% 100%}
+.tally .n{font:400 170px/.9 Lalezar;color:var(--gold2);margin:0 10px 0 26px}
+.tally .l{font:400 70px/1 Lalezar;color:var(--cream);direction:rtl;padding-bottom:10px}
+.duo .rowd{display:flex;align-items:center;justify-content:center;gap:34px;direction:ltr;margin:0 60px 34px;padding:26px 30px 18px;border-radius:36px}
+.duo .la{font:400 150px/1 Lalezar;letter-spacing:6px;color:var(--gold2)}
+.duo .la i{display:inline-block;font-style:normal}
+.duo .eq{font:400 110px/1 Lalezar;color:var(--cream)}
+.duo .ar{font:400 124px/1 Lalezar;color:#fff;direction:rtl}
+.duo .rowd.b .la{color:#bfe1ff}
+.stamp span{display:inline-block;padding:22px 50px 12px;border:10px solid #c8362c;border-radius:22px;background:rgba(248,239,220,.92);font:400 104px/1.1 Lalezar;color:#c8362c;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.cta .l1{position:absolute;left:30px;right:30px;top:226px;display:flex;align-items:center;justify-content:center;gap:26px;font:400 100px/1.15 Lalezar}
+.cta .l1 svg{flex:none;width:96px;height:96px;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5))}
+.cta .l2{position:absolute;left:0;right:0;top:1150px}
+.cta .l2 span{display:inline-block;padding:24px 56px 16px;border-radius:999px;font:400 72px/1.1 Lalezar;color:var(--cream)}
+.cta .h{position:absolute;left:0;right:0;top:1318px}
+.cta .h span{display:inline-block;direction:ltr;padding:18px 48px 12px;border-radius:999px;background:var(--cream);box-shadow:0 0 0 4px var(--gold),0 18px 40px rgba(0,0,0,.5);font:800 56px Tajawal;color:var(--deep)}
+
+/* Caption: the narration, a phrase at a time, the current word lit */
+#cap{left:70px;right:130px;top:1330px;text-align:center;opacity:0}
+#capTxt{display:inline-block;max-width:880px;font:800 62px/1.36 Tajawal;color:#fff;text-wrap:balance;transform-origin:50% 0;-webkit-text-stroke:9px rgba(4,22,16,.9);paint-order:stroke fill;text-shadow:0 6px 24px rgba(0,0,0,.75)}
+#capTxt span{display:inline-block}
+#capTxt span.ltr{direction:ltr;unicode-bidi:isolate}
+</style>
+</head>
+<body>
+<div id="stage">
+  <div id="pics"><div class="slot" id="s0"><img alt=""></div><div class="slot" id="s1"><img alt=""></div></div>
+  <canvas id="air" width="1080" height="1920"></canvas>
+  <div id="dim"></div>
+  <div id="shadeTop"></div>
+  <div id="shadeBot"></div>
+  <div id="cards"></div>
+  <div class="abs" id="cap"><div id="capTxt"></div></div>
+  <div id="tag"><svg viewBox="0 0 30 30"><g id="tagStar"></g></svg><b></b><span></span></div>
+  <div id="aiTag">مشهد توضيحي بالذكاء الاصطناعي</div>
+  <div id="door">
+    <div id="dark"></div>
+    <div id="glow"></div>
+    <div id="doorCam"><div id="leaves"><img id="leafL" src="../assets/door/leaf_l.jpg" alt=""><img id="leafR" src="../assets/door/leaf_r.jpg" alt=""></div><img id="wall" src="../assets/door/wall.png" alt=""><div id="plaque"></div></div>
+  </div>
+  <div id="flash"></div>
+</div>
+
+<script src="timeline.js"></script>
+<script src="../assets/door/door.js"></script>
+<script>
+const W = 1080, H = 1920, FPS = TL.fps, DUR = TL.duration;
+window.DURATION = DUR; window.FPS = FPS;
+const $ = s => document.querySelector(s);
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v)), lerp = (a, b, p) => a + (b - a) * p;
+const E = {
+  l: p => p, o: p => 1 - Math.pow(1 - p, 3), i: p => p * p * p, io: p => p < .5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2,
+  back: p => { const c = 1.9; return 1 + (c + 1) * Math.pow(p - 1, 3) + c * Math.pow(p - 1, 2); },
+  spring: p => p <= 0 ? 0 : p >= 1 ? 1 : 1 - Math.exp(-6.5 * p) * Math.cos(11 * p),
+};
+const P = (t, a, b, e = E.l) => e(clamp((t - a) / (b - a), 0, 1));
+const op = (e, v) => { e.style.opacity = clamp(v, 0, 1).toFixed(3); };
+const tf = (e, s) => { e.style.transform = s; };
+const fmt = n => Math.round(n).toLocaleString('en-US');
+const hash = n => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
+const BEATS = TL.beats, SHOTS = TL.shots;
+const beatAt = t => BEATS.find(b => t >= b.t0 && t < b.t1) || BEATS[BEATS.length - 1];
+
+// ---------- Brand tag: eight-point star, series name, handle ----------
+{
+  const pts = [...Array(16)].map((_, i) => { const a = i * Math.PI / 8 - Math.PI / 2, r = i % 2 ? 10.6 : 14; return (15 + Math.cos(a) * r).toFixed(1) + ',' + (15 + Math.sin(a) * r).toFixed(1); }).join(' ');
+  $('#tagStar').innerHTML = `<polygon points="${pts}" fill="#F6DD9A"/>`;
+  $('#tag b').textContent = TL.series; $('#tag span').textContent = TL.handle;
+}
+
+// ---------- Pictures ----------
+const slots = [$('#s0'), $('#s1')].map(el => ({ el, img: el.firstElementChild, src: '' }));
+async function load(slot, src) { if (slot.src !== src) { slot.img.src = src; slot.src = src; await slot.img.decode(); } }
+// Fill the frame at scale s, with the picture's point (fx, fy) as near the centre as its edges allow
+function cover(img, s, fx, fy) {
+  const c = Math.max(W / img.naturalWidth, H / img.naturalHeight) * s, w = img.naturalWidth * c, h = img.naturalHeight * c;
+  img.style.width = w.toFixed(2) + 'px'; img.style.height = h.toFixed(2) + 'px';
+  tf(img, `translate(${clamp(W / 2 - fx * w, W - w, 0).toFixed(2)}px,${clamp(H / 2 - fy * h, H - h, 0).toFixed(2)}px)`);
+}
+async function drawShot(slot, s, t) {
+  const p = (t - s.t0) / (s.t1 - s.t0);
+  if (s.video || s.clip || s.move) {
+    // Footage and camera moves were cut into frames by tools/plates.py: show the frame that belongs to this moment
+    const n = Math.round((s.t1 - s.t0) * FPS) + (s.clip ? 2 : Math.round(.5 * FPS)), f = clamp(Math.floor((t - s.t0) * FPS + 1e-6) + 1, 1, n);
+    await load(slot, `../build/plates/${s.id}/p_${String(f).padStart(5, '0')}.jpg`);
+    cover(slot.img, s.blur ? 1.06 : 1, .5, .5);
+  } else {
+    // A still: scale and focus point drift from the first triple to the second
+    await load(slot, `../assets/raw/${s.photo}.jpg`);
+    const k = s.kb || [1, .5, .5, 1.1, .5, .5];
+    cover(slot.img, lerp(k[0], k[3], p), lerp(k[1], k[4], p), lerp(k[2], k[5], p));
+  }
+  slot.img.style.filter = [s.css, s.blur ? `blur(${s.blur}px)` : ''].filter(Boolean).join(' ') || 'none';
+}
+async function renderPictures(t) {
+  const i = Math.max(0, SHOTS.findIndex(s => t >= s.t0 && t < s.t1)), s = SHOTS[i];
+  await drawShot(slots[i % 2], s, t);
+  op(slots[i % 2].el, 1); op(slots[(i + 1) % 2].el, 0);
+  return s;
+}
+
+// ---------- Air: birds over the exteriors, dust in the light indoors ----------
+const air = $('#air').getContext('2d');
+function renderAir(t, s) {
+  air.clearRect(0, 0, W, H); if (!s.air) return;
+  const u = t - s.t0, seed = SHOTS.indexOf(s) * 13;
+  if (s.air === 'birds') {
+    air.lineCap = 'round'; air.lineJoin = 'round';
+    for (let k = 0; k < 7; k++) {
+      const r = n => hash(seed + k * 7 + n), size = 9 + r(1) * 13, dir = r(2) < .5 ? 1 : -1;
+      const x = ((r(3) * (W + 300) + dir * u * (60 + r(4) * 70)) % (W + 300) + (W + 300)) % (W + 300) - 150, y = 180 + r(5) * 560 + Math.sin(u * .7 + r(6) * 6) * 26 - u * (4 + r(7) * 8);
+      const flap = Math.sin(u * (7 + r(8) * 4) + r(9) * 6);
+      air.strokeStyle = `rgba(22,26,34,${(.55 + r(10) * .3).toFixed(2)})`; air.lineWidth = size * .17;
+      air.beginPath(); air.moveTo(x - size, y - size * .55 * flap); air.quadraticCurveTo(x - size * .45, y - size * .25 * flap - size * .18, x, y);
+      air.quadraticCurveTo(x + size * .45, y - size * .25 * flap - size * .18, x + size, y - size * .55 * flap); air.stroke();
+    }
+  } else {
+    for (let k = 0; k < 46; k++) {
+      const r = n => hash(seed + k * 5 + n), x = r(1) * W + Math.sin(u * .5 + r(2) * 6) * 40 + u * (r(3) - .5) * 30, y = ((r(4) * H - u * (10 + r(5) * 26)) % H + H) % H;
+      air.fillStyle = `rgba(255,240,205,${((.08 + r(6) * .3) * (.5 + .5 * Math.sin(u * (1 + r(7) * 2) + r(8) * 6))).toFixed(3)})`;
+      air.beginPath(); air.arc(x, y, 1.5 + r(9) * 3.5, 0, 6.283); air.fill();
+    }
+  }
+}
+
+// ---------- The gate ----------
+// The wall picture has a hole where the door hangs; the two leaves swing inward in perspective, light spills
+// out, and the camera travels through the doorway into the first picture of the story playing behind.
+const doorBeat = BEATS.find(b => b.door), K0 = H / DOOR.h, [DX, DY, DW, DH] = DOOR.box;
+const LAMP = `<svg viewBox="0 0 220 470"><defs><linearGradient id="brass" x1="0" x2="1"><stop offset="0" stop-color="#6b4f17"/><stop offset=".45" stop-color="#d7b257"/><stop offset="1" stop-color="#7a5a1b"/></linearGradient><radialGradient id="flame" cx=".5" cy=".55" r=".6"><stop offset="0" stop-color="#fff6d8"/><stop offset=".5" stop-color="#ffc861"/><stop offset="1" stop-color="#c9791c"/></radialGradient><radialGradient id="lampGlow"><stop offset="0" stop-color="#ffd98a" stop-opacity=".5"/><stop offset="1" stop-color="#ffd98a" stop-opacity="0"/></radialGradient></defs>`
+  + `<circle class="halo" cx="110" cy="262" r="205" fill="url(#lampGlow)"/><rect x="92" y="0" width="36" height="26" rx="6" fill="url(#brass)"/><path d="M110 26v62" stroke="#5a4416" stroke-width="7" stroke-dasharray="12 7"/>`
+  + `<path d="M110 84l-22 26h44z" fill="url(#brass)"/><path d="M70 150Q110 92 150 150Z" fill="url(#brass)"/><rect x="60" y="148" width="100" height="14" rx="5" fill="url(#brass)"/>`
+  + `<path class="glass" d="M68 162h84l12 150H56z" fill="url(#flame)"/><path d="M68 162h84l12 150H56zM110 162v150M62 236h96" fill="none" stroke="url(#brass)" stroke-width="9" stroke-linejoin="round"/>`
+  + `<path d="M50 312h120l-22 44H72z" fill="url(#brass)"/><path d="M96 356h28l-14 40z" fill="url(#brass)"/><circle cx="110" cy="404" r="11" fill="url(#brass)"/></svg>`;
+if (doorBeat) {
+  const lv = $('#leaves'); lv.style.left = DX + 'px'; lv.style.top = DY + 'px'; lv.style.width = DW + 'px'; lv.style.height = DH + 'px';
+  lv.style.perspective = '3400px'; lv.style.perspectiveOrigin = '50% 46%';
+  const L = $('#leafL'), R = $('#leafR'); L.style.left = '0'; L.style.width = DOOR.left + 'px'; L.style.transformOrigin = '0 50%';
+  R.style.left = DOOR.left + 'px'; R.style.width = (DW - DOOR.left) + 'px'; R.style.transformOrigin = '100% 50%';
+  const cam = $('#doorCam'); cam.style.width = DOOR.w + 'px'; cam.style.height = DOOR.h + 'px'; cam.style.transformOrigin = `${DX + DW / 2}px ${DY + DH / 2}px`;
+  const pq = $('#plaque'), [px, py, pw, ph] = DOOR.plaque; pq.style.left = px + 'px'; pq.style.top = py + 'px'; pq.style.width = pw + 'px'; pq.style.height = ph + 'px'; pq.textContent = TL.title || TL.series;
+  DOOR.lamps.forEach(([x, y]) => { const d = document.createElement('div'); d.className = 'lamp'; d.style.left = x + 'px'; d.style.top = y + 'px'; d.innerHTML = LAMP; cam.appendChild(d); });
+}
+function renderDoor(t) {
+  const el = $('#door'); if (!doorBeat) return 0;
+  const u = t - doorBeat.t0, lead = doorBeat.t1 - doorBeat.t0 - .45, on = u >= 0 && u < lead + .45;
+  el.style.display = on ? 'block' : 'none'; if (!on) return 0;
+  const swing = P(u, .24 * lead, .8 * lead, E.io), ang = 112 * swing, through = P(u, .5 * lead, lead + .4, E.i), settle = P(u, .5 * lead, lead + .25, E.io);
+  // Camera: a breath toward the gate, then straight through the middle of the doorway
+  const k = K0 * (1 + .06 * P(u, 0, .9, E.o) + 3.2 * through), cx = DX + DW / 2, cy = DY + DH / 2;
+  const x = lerp(cx * K0 - (DOOR.w * K0 - W) / 2, W / 2, settle), y = lerp(cy * K0, H / 2, settle);
+  tf($('#doorCam'), `translate(${(x - cx).toFixed(2)}px,${(y - cy).toFixed(2)}px) scale(${k.toFixed(5)})`);
+  const shade = `brightness(${(1 - .62 * Math.sin(Math.min(ang, 90) * Math.PI / 180)).toFixed(3)})`;
+  tf($('#leafL'), `rotateY(${ang.toFixed(2)}deg)`); tf($('#leafR'), `rotateY(${(-ang).toFixed(2)}deg)`); $('#leafL').style.filter = $('#leafR').style.filter = shade;
+  // Dark inside until the leaves part, a bloom of light as they do
+  op($('#dark'), 1 - P(u, .34 * lead, .78 * lead)); op($('#glow'), Math.sin(Math.PI * P(u, .26 * lead, 1.1 * lead)) * .8);
+  // Lanterns sway a little and flicker
+  document.querySelectorAll('.lamp').forEach((d, i) => { tf(d, `rotate(${(1.6 * Math.sin(t * 1.7 + i * 2)).toFixed(2)}deg)`); d.querySelector('.glass').style.opacity = d.querySelector('.halo').style.opacity = (.82 + .18 * Math.sin(t * 13 + i * 4) * Math.sin(t * 7.3 + i)).toFixed(3); });
+  op($('#wall'), 1 - P(u, lead + .25, lead + .45));
+  return 1;
+}
+
+// ---------- Graphics: they appear on a word and leave with their line ----------
+const SVGS = {
+  pin: '<svg class="pin" viewBox="0 0 140 180"><path d="M70 6C36 6 10 32 10 66c0 44 60 108 60 108s60-64 60-108C130 32 104 6 70 6z" fill="#B8362E" stroke="#F6DD9A" stroke-width="7"/><circle cx="70" cy="66" r="24" fill="#F8EFDC"/></svg>',
+  minaret: '<svg viewBox="0 0 74 190"><path d="M37 2 L47 44 H27 Z" fill="#F6DD9A"/><rect x="27" y="44" width="20" height="30" fill="#F8EFDC"/><rect x="19" y="72" width="36" height="12" rx="3" fill="#F6DD9A"/><rect x="25" y="84" width="24" height="44" fill="#F8EFDC"/><rect x="17" y="126" width="40" height="12" rx="3" fill="#F6DD9A"/><rect x="23" y="138" width="28" height="50" fill="#F8EFDC"/></svg>',
+  send: '<svg viewBox="0 0 96 96"><path d="M8 44 L88 8 L60 88 L46 54 Z" fill="#F6DD9A" stroke="#07241A" stroke-width="6" stroke-linejoin="round"/><path d="M46 54 L88 8" stroke="#07241A" stroke-width="6"/></svg>',
+};
+const KIND = {
+  ribbon: {
+    html: c => `<span class="panel">${c.text}</span>`, top: 236,
+    draw(e, c, t, v) { tf(e, `translateY(${((1 - v.a) * -70).toFixed(1)}px) scale(${(.8 + .2 * v.a).toFixed(4)})`); },
+  },
+  title: {
+    html: c => `${SVGS.pin}<div class="box panel"><div class="t">${c.text}</div><div class="s">${c.sub || ''}</div></div><br><div class="t2"${c.tint ? ` style="background:${c.tint}"` : ''}>${c.text2 || ''}</div>`, top: 330,
+    draw(e, c, t, v) {
+      tf(e, `scale(${(.6 + .4 * v.a).toFixed(4)})`);
+      const d = P(t, c.at + .2, c.at + .65, E.spring), pin = e.querySelector('.pin');
+      op(pin, t >= c.at + .2 ? 1 : 0); tf(pin, `translateY(${lerp(-420, 0, d).toFixed(1)}px)`);
+      const at2 = c.on2At ?? c.at + .6, b = P(t, at2 - .1, at2 + .35, E.back), t2 = e.querySelector('.t2');
+      op(t2, c.text2 ? P(t, at2 - .1, at2 + .05) : 0); tf(t2, `scale(${(.5 + .5 * b).toFixed(4)}) rotate(${((1 - b) * -8).toFixed(2)}deg)`);
+    },
+  },
+  year: {
+    html: () => `<span class="n"></span>`, top: 236,
+    draw(e, c, t, v) {
+      // With "from", the years roll back like an odometer; otherwise the year lands in one hit
+      const roll = c.from ? P(t, c.at, c.at + 1.5, E.io) : 1;
+      e.firstChild.textContent = Math.round(lerp(c.from || c.value, c.value, roll));
+      tf(e, `scale(${(.5 + .5 * v.a + (c.from ? .04 * Math.sin(roll * Math.PI) : 0)).toFixed(4)})`);
+    },
+  },
+  ask: {
+    html: c => `<span class="t display">${c.text}</span>`, top: 250,
+    draw(e, c, t, v) { tf(e, `scale(${(.5 + .5 * v.a).toFixed(4)}) rotate(${(2.2 * Math.sin((t - c.at) * 5)).toFixed(2)}deg)`); },
+  },
+  chip: {
+    html: c => c.text ? `<span class="l">${c.text}</span>` : `<span class="l">${c.label}</span><span class="n"></span>`, top: 620,
+    draw(e, c, t, v) {
+      tf(e, `scale(${(.4 + .6 * P(t, c.at - .1, c.at + .4, E.spring)).toFixed(4)})`);
+      if (!c.text) e.querySelector('.n').textContent = (c.plus ? '+' : '') + fmt(c.num * P(t, c.at, c.at + .9, E.o));
+    },
+  },
+  span: {
+    html: c => `<div class="box panel"><div class="lab">${c.label || ''}</div><div class="row"><span>${c.from}</span><div class="bar"><i></i></div><span class="to">${c.to}</span></div></div>`, top: 236,
+    draw(e, c, t, v) {
+      tf(e, `translateY(${((1 - v.a) * -80).toFixed(1)}px)`);
+      const full = c.fullAt ?? c.at + 2, p = P(t, c.at + .2, full + .3, E.io);
+      e.querySelector('i').style.width = (p * 100).toFixed(2) + '%';
+      const to = e.querySelector('.to'); op(to, .35 + .65 * P(t, full, full + .2)); tf(to, `scale(${(1 + .25 * Math.sin(Math.PI * P(t, full, full + .4))).toFixed(3)})`);
+      op(e.querySelector('.lab'), P(t, full + .1, full + .4));
+    },
+  },
+  tally: {
+    html: c => `<div class="box panel">${SVGS.minaret.repeat(c.n)}<span class="n"></span><span class="l">${c.label}</span></div>`, top: 236,
+    draw(e, c, t, v) {
+      tf(e, `scale(${(.7 + .3 * v.a).toFixed(4)})`); let shown = 0;
+      e.querySelectorAll('svg').forEach((m, k) => { const at = c.at + .15 + k * .17, p = P(t, at, at + .3, E.back); op(m, p > 0 ? 1 : .12); tf(m, `scaleY(${(.2 + .8 * p).toFixed(3)})`); if (t >= at) shown = k + 1; });
+      e.querySelector('.n').textContent = shown;
+    },
+  },
+  duo: {
+    html: c => `<div class="rowd a panel"><span class="la">${c.a.latin}</span><span class="eq">=</span><span class="ar">${c.a.ar}</span></div>`
+      + `<div class="rowd b panel"><span class="la">${[...c.a.latin].map(ch => `<i>${ch}</i>`).join('')}</span><span class="eq">=</span><span class="ar">${c.b.ar}</span></div>`, top: 560,
+    draw(e, c, t, v) {
+      const [a, b] = e.children, at2 = c.on2At ?? c.at + 1.2;
+      tf(a, `translateX(${((1 - v.a) * 500).toFixed(1)}px)`);
+      const pb = P(t, at2 - .15, at2 + .35, E.back); op(b, P(t, at2 - .15, at2)); tf(b, `translateX(${((1 - pb) * -500).toFixed(1)}px)`);
+      // The second word is the first one losing its extra letters: they drop away
+      const keep = c.b.latin.length, drop = P(t, at2 + .35, at2 + .85, E.i);
+      b.querySelectorAll('.la i').forEach((ch, k) => { if (k >= keep) { op(ch, 1 - drop); tf(ch, `translateY(${(drop * 170).toFixed(1)}px) rotate(${(drop * 50).toFixed(1)}deg)`); ch.style.width = drop >= 1 ? '0' : ''; } });
+      op(b.querySelector('.ar'), P(t, at2 + .7, at2 + .95)); op(b.querySelector('.eq'), P(t, at2 + .6, at2 + .8));
+    },
+  },
+  stamp: {
+    html: c => `<span>${c.text}</span>`, top: 780,
+    draw(e, c, t, v) { const p = P(t, c.at - .05, c.at + .16, E.i), sh = t < c.at + .5 ? Math.sin((t - c.at) * 60) * 5 * (1 - P(t, c.at + .16, c.at + .5)) : 0; tf(e, `translateX(${sh.toFixed(1)}px) rotate(-8deg) scale(${lerp(2.6, 1, p).toFixed(4)})`); },
+  },
+  cta: {
+    html: c => `<div class="l1 display"><span>${c.line1}</span>${SVGS.send}</div><div class="l2"><span class="panel">${c.line2}</span></div><div class="h"><span>${TL.handle}</span></div>`, top: 0,
+    draw(e, c, t, v) {
+      const [l1, l2, h] = e.children, at2 = c.on2At ?? c.at + 1.4;
+      tf(l1, `scale(${(.7 + .3 * P(t, c.at, c.at + .45, E.back)).toFixed(4)})`);
+      tf(l1.querySelector('svg'), `translate(${(14 * Math.sin(t * 4.6)).toFixed(1)}px,${(-10 * Math.sin(t * 4.6)).toFixed(1)}px)`);
+      const b = P(t, at2 - .15, at2 + .35, E.back); op(l2, P(t, at2 - .15, at2)); tf(l2, `scale(${(.6 + .4 * b).toFixed(4)})`);
+      const hb = P(t, at2 + .5, at2 + .95, E.back); op(h, P(t, at2 + .5, at2 + .65)); tf(h, `scale(${(.6 + .4 * hb).toFixed(4)})`);
+    },
+  },
+};
+const CARDS = [];
+BEATS.forEach(b => {
+  let chips = 0;
+  b.cards.forEach(c => {
+    const k = KIND[c.type], e = document.createElement('div');
+    e.className = 'cd ' + c.type; e.innerHTML = k.html(c); e.style.top = (c.y ?? (c.type === 'chip' ? k.top + 150 * chips++ : k.top)) + 'px';
+    $('#cards').appendChild(e); CARDS.push({ e, c, b, k });
+  });
+});
+function renderCards(t) {
+  let top = 0;
+  for (const { e, c, k } of CARDS) {
+    const on = t >= c.at - .12 && t < c.offAt, vis = on ? Math.min(P(t, c.at - .12, c.at + .1), 1 - P(t, c.offAt - .22, c.offAt)) : 0;
+    op(e, vis); if (!on) continue;
+    k.draw(e, c, t, { a: P(t, c.at - .12, c.at + .38, E.back) });
+    if ((c.y ?? k.top) < 600) top = Math.max(top, vis);
+  }
+  return top;
+}
+
+// ---------- Captions ----------
+// A line is shown phrase by phrase: split at punctuation, short phrases joined to the next
+const CAPS = [];
+BEATS.filter(b => b.caps !== false).forEach(b => {
+  let cur = [];
+  const flush = () => { if (cur.length) { CAPS.push({ words: cur, a: cur[0].a, b: cur[cur.length - 1].b, beat: b }); cur = []; } };
+  b.words.forEach((w, k) => { cur.push(w); const end = /[…؟?!.:]$/.test(w.w), next = b.words.length - k - 1; if ((end && cur.length >= 2 && next !== 1) || cur.length >= 6) flush(); });
+  flush();
+});
+CAPS.forEach((c, k) => { const n = CAPS[k + 1]; c.end = n && n.beat === c.beat ? n.a - .04 : Math.min(c.beat.t1 - .05, c.b + .7); c.start = k && CAPS[k - 1].beat === c.beat ? c.a - .04 : Math.max(c.beat.t0 + .05, c.a - .25); });
+const capTxt = $('#capTxt'); let capIdx = -1;
+function renderCaps(t) {
+  const i = CAPS.findIndex(c => t >= c.start && t < c.end), c = CAPS[i];
+  op($('#cap'), c ? 1 : 0); if (!c) return 0;
+  if (i !== capIdx) { capIdx = i; capTxt.innerHTML = c.words.map(w => `<span${/[A-Za-z0-9]/.test(w.w) ? ' class="ltr"' : ''}>${w.w}</span>`).join(' '); }
+  tf(capTxt, `scale(${(.8 + .2 * P(t, c.start, c.start + .22, E.back)).toFixed(4)})`);
+  [...capTxt.children].forEach((sEl, k) => { const w = c.words[k], p = P(t, w.a - .1, w.a + .08, E.o), now = t >= w.a - .05 && t < w.b + .05; op(sEl, .72 + .28 * p); sEl.style.color = now ? '#F6DD9A' : ''; tf(sEl, `scale(${now ? 1.06 : 1})`); });
+  return 1;
+}
+
+// ---------- Frame ----------
+const BODY = (BEATS.find(b => !b.clip) || BEATS[0]).t0;                // where the host's opening hands over to the story
+window.renderAt = async function (t) {
+  t = clamp(t, 0, DUR - 1e-4);
+  const s = await renderPictures(t), b = beatAt(t), door = renderDoor(t), top = renderCards(t), cap = renderCaps(t);
+  renderAir(t, s);
+  // Shades keep text readable; the host's own footage stays clean
+  op($('#shadeTop'), top * (s.clip ? .45 : 1)); op($('#shadeBot'), cap * .8 + (b.cards.some(c => c.type === 'cta') ? .5 : 0));
+  op($('#dim'), b.cards.some(c => c.type === 'duo' && t >= c.at - .2) ? .4 : 0);
+  op($('#tag'), door ? 0 : P(t, .3, .7) * .95);
+  op($('#aiTag'), s.ai && !door ? .9 : 0);                              // generated footage of a real place says so
+  // Cuts get a short white kiss; leaving the host for the gate gets a fuller flash
+  const cut = SHOTS.find(x => x.t0 > 0 && t >= x.t0 && t < x.t0 + .14);
+  op($('#flash'), Math.max(cut ? .22 * (1 - P(t, cut.t0, cut.t0 + .14)) : 0, BODY > 0 && t >= BODY - .04 ? .7 * (1 - P(t, BODY, BODY + .3)) : 0));
+};
+
+(async () => {
+  await Promise.all(['400 20px Lalezar', '700 20px "Aref Ruqaa"', '800 20px Tajawal', '700 20px Tajawal', '500 20px Tajawal'].map(f => document.fonts.load(f, 'ساحة 0123 + ALTIN')));
+  await Promise.all([...document.images].filter(i => i.getAttribute('src')).map(i => i.decode().catch(() => {})));
+  // The title on the gate's plaque shrinks until it fits (measured on a canvas: the gate is not laid out yet)
+  for (let size = 150, pen = document.createElement('canvas').getContext('2d'); doorBeat && size > 56; size -= 6) {
+    pen.font = `700 ${size}px "Aref Ruqaa"`; $('#plaque').style.fontSize = size + 'px';
+    if (pen.measureText($('#plaque').textContent).width <= DOOR.plaque[2] - 110) break;
+  }
+  await window.renderAt(0); window.filmReady = true;
+})();
+</script>
+</body>
+</html>

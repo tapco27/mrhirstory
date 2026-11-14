@@ -1,0 +1,11 @@
+node_modules/
+build/
+out/
+__pycache__/
+template/assets/hd/
+template/assets/door/wall.png
+template/assets/door/leaf_*.jpg
+template/assets/door/door.js
+template/models/depth_small.onnx
+template/src/timeline.js
+*.skill

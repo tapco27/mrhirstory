@@ -1,0 +1,10 @@
+{
+  "name": "mr-history-reel",
+  "private": true,
+  "description": "Mr. History reel template: fonts used by the film page",
+  "dependencies": {
+    "@fontsource/tajawal": "^5.2.0",
+    "@fontsource/lalezar": "^5.2.0",
+    "@fontsource/aref-ruqaa": "^5.2.0"
+  }
+}
